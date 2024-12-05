@@ -2,31 +2,25 @@
 #include <stdio.h>
 #include <unistd.h>
  
-
-int value = 0;  // общий ресурс
- 
- 
-void* do_work(void* thread_id)
+int somework(void* Num)
 {
-    value = 1;
-    int id = *(int*)thread_id;     // получаем id потока
-    for (int n = 0; n < 5; n++) 
-    {
-        printf("Thread %d: %d\n", id, value );
-        value += 1;
-        sleep(1);
-    }
-    return NULL;
+	printf("Starting...\nLocale...\n");
+	sleep(5);
+	printf("Engine...%d\n\n", Num);
+	sleep(4);
+	printf(".");
+	sleep(1);
+	printf("..");
+	sleep(1);
+	printf("...");
+	sleep(1);
+	printf("Sucess!");
 }
 int main(void) 
 {
-    pthread_t t1, t2;       // два потока для демонстрации
-    int t1_id = 1, t2_id = 2;  // идентификаторы потоков
-    pthread_create(&t1, NULL, do_work, &t1_id);
-    pthread_create(&t2, NULL, do_work, &t2_id);
- 
-    pthread_join(t1, NULL);
-    pthread_join(t2, NULL);
-     
-    return 0;
+	pthread_t th1, th2;
+	pthread_create(&th1, NULL, somework, 4);
+    	pthread_create(&th2, NULL, somework, 2);
+	printf("Двигатели работают\n");
+    	return 0;
 }
